@@ -1,0 +1,87 @@
+.etfw-transient {
+	position: relative;
+	z-index: 1;
+}
+
+.etfw-transient h3 img {
+	vertical-align: middle;
+	display: inline-block;
+	margin-right: 8px;
+}
+
+.etfw-transient .notice-dismiss:before {
+	display: inline-block;
+	float: right;
+}
+
+.etfw-transient .notice-dismiss:hover {
+	color: #d63638;
+}
+
+#etfw-transients-grouped {
+	background: none;
+	border: 0;
+	box-shadow: none;
+	min-height: 42px;
+	padding: 0;
+	position: relative;
+
+	#etfw-transients {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		display: flex;
+		overflow-x: scroll;
+		scroll-behavior: smooth;
+		box-sizing: border-box;
+		scrollbar-color: transparent transparent;
+	}
+
+	#etfw-transients::-webkit-scrollbar {
+		width: 0;
+	}
+
+	#etfw-transients::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	#etfw-transients::-webkit-scrollbar-thumb {
+		background: transparent;
+		border: none;
+	}
+
+	#etfw-transients > div {
+		position: relative;
+		flex: 0 0 calc(100% - 5em - 5px);
+		background: #fff;
+		border: 1px solid #c3c4c7;
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+		border-left-width: 4px;
+		padding: 1px 4em 1px 1em;
+		/**
+		Hint: Chrome Bug: https://issues.chromium.org/issues/40074749
+		 */
+		scroll-margin-top: 100vh;
+	}
+	.notice-dismiss { right: 5em }
+
+	.etfw-snapper {
+		position: absolute;
+		right: 1em;
+		top: 0;
+		z-index: 1;
+		a {
+			text-decoration: none;
+			padding: 9px 0;
+			display: inline-block;
+		}
+	}
+
+	#etfw-transients > div.etfw-error { border-left-color: #d63638 }
+	#etfw-transients > div.etfw-notice-info { border-left-color: #72aee6 }
+	#etfw-transients > div.etfw-updated { border-left-color: #00a32a }
+	#etfw-transients > div.etfw-success { border-left-color: #00a32a }
+	#etfw-transients > div.etfw-warning { border-left-color: #dba617 }
+}
