@@ -59,6 +59,11 @@ class Grouped {
 		// get list of transients of this plugin.
 		$transients = Transients::get_instance()->get_transients();
 
+        // bail if list is empty.
+        if( empty( $transients ) ) {
+            return;
+        }
+
 		// sort the transients: primary by their types (error > success).
 		usort( $transients, array( $this, 'sort_by_type' ) );
 
