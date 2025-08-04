@@ -21,7 +21,12 @@ jQuery(document).ready(function($) {
 
       // run ajax request to save this setting
       $.post( etfwJsVars.ajax_url, data );
-      $this.closest( 'div[data-dismissible]' ).hide( 'slow' );
+      $this.closest( 'div[data-dismissible]' ).hide( 'slow', function() {
+          // remove grouped if empty.
+          if( $("#etfw-transients > div:visible").length === 0 ) {
+              $('#etfw-transients-grouped').remove();
+          }
+      } );
     }
   );
 
