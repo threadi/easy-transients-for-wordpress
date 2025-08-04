@@ -1,6 +1,11 @@
 .etfw-transient {
 	position: relative;
 	z-index: 1;
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+	border-left-width: 4px;
+	padding: 1px 4em 1px 1em;
 }
 
 .etfw-transient h3 img {
@@ -78,10 +83,10 @@
 			display: inline-block;
 		}
 	}
-
-	#etfw-transients > div.etfw-error { border-left-color: #d63638 }
-	#etfw-transients > div.etfw-notice-info { border-left-color: #72aee6 }
-	#etfw-transients > div.etfw-updated { border-left-color: #00a32a }
-	#etfw-transients > div.etfw-success { border-left-color: #00a32a }
-	#etfw-transients > div.etfw-warning { border-left-color: #dba617 }
 }
+
+.etfw-transient.etfw-error, #etfw-transients > div.etfw-error { border-left-color: #d63638 }
+.etfw-transient.etfw-notice-info, #etfw-transients > div.etfw-notice-info { border-left-color: #72aee6 }
+.etfw-transient.etfw-updated, #etfw-transients > div.etfw-updated { border-left-color: #00a32a }
+.etfw-transient.etfw-success, #etfw-transients > div.etfw-success { border-left-color: #00a32a }
+.etfw-transient.etfw-warning, #etfw-transients > div.etfw-warning { border-left-color: #dba617 }
