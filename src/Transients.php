@@ -163,7 +163,7 @@ class Transients {
         }
 
         // loop through the list and create the corresponding transient-objects for this project.
-        foreach ( $transients_from_db[ $this->get_slug() ] as $transient ) {
+        foreach ( $transients_from_db[ $this->get_slug() ] as $index => $transient ) {
             if( is_string( $transient ) ) {
                 // remove this entry.
                 unset( $transients_from_db[ $this->get_slug() ][ $index ] );
