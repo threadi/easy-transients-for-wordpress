@@ -103,7 +103,7 @@ class Transient {
         $this->set_type( $entry['type'] );
         $this->set_dismissible_days( $entry['dismissible_days'] );
         $this->set_action( $entry['action'] );
-        $this->set_hide_on( $entry['hide_on'] );
+        $this->set_hide_on( ! empty( $entry['hide_on'] ) ? $entry['hide_on'] : array() );
         $this->set_prioritized( isset( $entry['prioritized'] ) ? $entry['prioritized'] : false );
     }
 
