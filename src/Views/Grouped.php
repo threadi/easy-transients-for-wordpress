@@ -71,11 +71,6 @@ class Grouped {
         $first = $transients[array_key_first( $transients )]->get_name();
         $counter = 0;
         foreach ( $transients as $transient_obj ) {
-            // bail if transient is not set.
-            if ( ! $transient_obj->is_set() || $transient_obj->is_dismissed() ) {
-                continue;
-            }
-
             // save the last entry as prev for this object.
             if( $last !== $transient_obj->get_name() ) {
                 $prev[ $transient_obj->get_name() ] = $last;

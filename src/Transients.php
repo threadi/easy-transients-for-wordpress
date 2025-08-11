@@ -165,8 +165,16 @@ class Transients {
         // loop through the list and create the corresponding transient-objects for this project.
         foreach ( $transients_from_db[ $this->get_slug() ] as $transient ) {
             if( is_string( $transient ) ) {
+                // remove this entry.
+                unset( $transients_from_db[ $this->get_slug() ][ $index ] );
+
                 // create the object from setting.
                 $transient = new Transient( $transient );
+            }
+
+            // bail if transient is not set.
+            if ( ! $transient->is_set() || $transient->is_dismissed() ) {
+                continue;
             }
 
             // add object to list.
