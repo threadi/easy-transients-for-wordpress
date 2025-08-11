@@ -174,6 +174,10 @@ class Transients {
 
             // bail if transient is not set.
             if ( ! $transient->is_set() || $transient->is_dismissed() ) {
+                // remove this entry.
+                unset( $transients_from_db[ $this->get_slug() ][ $index ] );
+
+                // do not add this.
                 continue;
             }
 
