@@ -289,7 +289,7 @@ class Transient {
      * @return string|int|false
      */
     private function get_admin_transient_dismiss_cache(): string|int|false {
-        $cache_key = 'pi-dismissed-' . md5( $this->get_name() ); // TODO Pluginkennung verwenden.
+        $cache_key = Transients::get_instance()->get_slug() . '-dismissed-' . md5( $this->get_name() );
         $timeout   = get_option( $cache_key );
         $timeout   = 'forever' === $timeout ? time() + 60 : $timeout;
 
@@ -306,7 +306,7 @@ class Transient {
      * @return void
      */
     public function delete_dismiss(): void {
-        delete_option( 'pi-dismissed-' . md5( $this->get_name() ) ); // TODO Pluginkennung verwenden.
+        delete_option(Transients::get_instance()->get_slug() . '-dismissed-' . md5($this->get_name()));
     }
 
     /**

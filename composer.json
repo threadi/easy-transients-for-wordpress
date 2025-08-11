@@ -1,6 +1,6 @@
 {
   "name": "threadi/easy-transients-for-wordpress",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Provides a simple object to handle transients in the WordPress-backend.",
   "type": "library",
   "license": "GPL-3.0-or-later",
