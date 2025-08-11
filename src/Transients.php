@@ -367,27 +367,21 @@ class Transients {
      * @return void
      */
     public function add_scripts(): void {
-        // get absolute path for this package.
-        $path = __DIR__.'/../';
-
-        // get the URL were we could call our scripts.
-        $url = $this->get_url().'/'.str_replace($this->get_path(), '', $this->get_vendor_path()).'/threadi/easy-transients-for-wordpress/';
-
         // add our script.
         wp_enqueue_script(
             'easy-transients-for-wordpress',
-            $url . 'files/js.js',
+            $this->get_url() . 'Files/js.js',
             array( 'jquery' ),
-            filemtime( $path . 'files/js.js' ),
+            filemtime( $this->get_path() . 'Files/js.js' ),
             true
         );
 
         // embed the dialog-components CSS-script.
         wp_enqueue_style(
             'easy-transients-for-wordpress',
-            $url . 'files/style.css',
+            $this->get_url() . 'Files/style.css',
             array(),
-            filemtime( $path . 'files/style.css' )
+            filemtime( $this->get_path() . 'Files/style.css' )
         );
 
         // add php-vars to our js-script.
@@ -406,7 +400,7 @@ class Transients {
      *
      * @return string
      */
-    private function get_vendor_path(): string {
+    public function get_vendor_path(): string {
         // return configured vendor path.
         if( ! empty( $this->vendor_path ) ) {
             return $this->vendor_path;

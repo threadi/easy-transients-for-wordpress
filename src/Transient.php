@@ -211,7 +211,7 @@ class Transient {
 
         // output, if message is given.
         if ( $this->has_message() ) {
-            include Templates::get_instance()->get_template( 'vendor/threadi/easy-transients-for-wordpress/templates/' . Transients::get_instance()->get_template() );
+            include Templates::get_instance()->get_template( Transients::get_instance()->get_template() );
         }
 
         // call action, if set.

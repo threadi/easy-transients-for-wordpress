@@ -44,29 +44,29 @@ class Templates {
 		return self::$instance;
 	}
 
-	/**
-	 * Return path to a requested template if it exists.
-	 *
-	 * Also load the requested file if it is located in the /wp-content/themes/xy/plugin-slug/vendor/threadi/easy-transients-for-wordpress/templates/ directory.
-	 * Or from actual plugin in /wp-content/plugins/plugin-slug/vendor/threadi/easy-transients-for-wordpress/templates/
-	 *
-	 * @param string $template The template to use.
-	 * @return string
-	 */
-	public function get_template( string $template ): string {
-		// check if requested template exist in theme.
-		$theme_template = locate_template( trailingslashit( basename( Transients::get_instance()->get_path() ) ) . $template );
-		if ( $theme_template ) {
-			return $theme_template;
-		}
+    /**
+     * Return path to a requested template if it exists.
+     *
+     * Also load the requested file if it is located in the /wp-content/themes/xy/plugin-slug/vendor/threadi/easy-transients-for-wordpress/templates/ directory.
+     * Or from actual plugin in /wp-content/plugins/plugin-slug/vendor/threadi/easy-transients-for-wordpress/templates/
+     *
+     * @param string $template The template to use.
+     * @return string
+     */
+    public function get_template( string $template ): string {
+        // check if requested template exist in theme.
+        $theme_template = locate_template( trailingslashit( basename( Transients::get_instance()->get_path() ) ) . $template );
+        if ( $theme_template ) {
+            return $theme_template;
+        }
 
-		// check if actual plugin does contain the requested template.
-		$plugin_template = Transients::get_instance()->get_path() . 'templates/' . $template;
-		if( file_exists( $plugin_template ) ) {
-			return $plugin_template;
-		}
+        // check if actual plugin does contain the requested template.
+        $plugin_template = Transients::get_instance()->get_vendor_path() . '../templates/vendor/threadi/easy-transients-for-wordpress/templates/' . $template;
+        if( file_exists( $plugin_template ) ) {
+            return $plugin_template;
+        }
 
-		// return path to our own template.
-		return Transients::get_instance()->get_path() . $template;
-	}
+        // return path to our own template.
+        return Transients::get_instance()->get_path() . 'Templates/' . $template;
+    }
 }
