@@ -87,6 +87,8 @@
 
 .etfw-transient.etfw-error, #etfw-transients-grouped #etfw-transients > div.etfw-error { border-left-color: #d63638 }
 .etfw-transient.etfw-notice-info, #etfw-transients-grouped #etfw-transients > div.etfw-notice-info { border-left-color: #72aee6 }
+.etfw-transient.etfw-info, #etfw-transients-grouped #etfw-transients > div.etfw-info { border-left-color: #72aee6 }
+.etfw-transient.etfw-hint, #etfw-transients-grouped #etfw-transients > div.etfw-hint { border-left-color: #72aee6 }
 .etfw-transient.etfw-updated, #etfw-transients-grouped #etfw-transients > div.etfw-updated { border-left-color: #00a32a }
 .etfw-transient.etfw-success, #etfw-transients-grouped #etfw-transients > div.etfw-success { border-left-color: #00a32a }
 .etfw-transient.etfw-warning, #etfw-transients-grouped #etfw-transients > div.etfw-warning { border-left-color: #dba617 }
