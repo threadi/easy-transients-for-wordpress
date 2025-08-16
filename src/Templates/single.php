@@ -6,7 +6,7 @@
  * @package easy-transients-for-wordpress
  */
 ?>
-<div class="etfw-transient updated <?php echo esc_attr( $this->get_type() ); ?>" data-dismissible="<?php echo esc_attr( $this->get_name() ); ?>-<?php echo absint( $this->get_dismissible_days() ); ?>">
+<div class="etfw-transient updated etfw-<?php echo esc_attr( $this->get_type() ); ?>" data-dismissible="<?php echo esc_attr( $this->get_name() ); ?>-<?php echo absint( $this->get_dismissible_days() ); ?>">
 	<?php
 	echo wp_kses_post( wpautop( $this->get_message() ) );
 	if ( $this->get_dismissible_days() > 0 ) {
