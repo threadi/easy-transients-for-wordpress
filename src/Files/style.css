@@ -23,6 +23,10 @@
 	color: #d63638;
 }
 
+.etfw-transient .button + .button {
+	margin-left: 1em;
+}
+
 #etfw-transients-grouped {
 	background: none;
 	border: 0;
