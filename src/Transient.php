@@ -485,4 +485,25 @@ class Transient {
     public function set_prioritized( bool $prioritized ): void {
         $this->prioritized = $prioritized;
     }
+
+    /**
+     * Run only the action.
+     *
+     * @return void
+     */
+    public function run(): void {
+        // call action, if set.
+        if ( $this->has_action() ) {
+            // get the action.
+            $action = $this->get_action();
+
+            // check if it is callable and exist.
+            if ( is_callable( $action ) && method_exists( $action[0], $action[1] ) ) {
+                $action();
+            }
+        }
+
+        // remove the transient.
+        $this->delete();
+    }
 }
