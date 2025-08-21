@@ -107,6 +107,9 @@ class Transients {
         // enable our own notices.
         add_action( 'admin_notices', array( $this, 'init_notices' ) );
 
+        // run the action transients.
+        add_action( 'shutdown', array( $this, 'init_actions' ) );
+
         // register our scripts.
         add_action( 'admin_enqueue_scripts', array( $this, 'add_scripts' ), 10, 0 );
 
@@ -126,12 +129,32 @@ class Transients {
         }
 
         // show the transients depending on configured display method.
-        if( 'single' === $this->get_display_method() || 1 === count( $this->get_transients() ) ) {
+        if( 'single' === $this->get_display_method() || 1 === count( $this->get_transients( true ) ) ) {
             $this->set_template( 'single.php' );
             Single::get_instance()->display();
         }
         else {
             Grouped::get_instance()->display();
+        }
+    }
+
+    /**
+     * Run the actions from transients.
+     *
+     * @return void
+     */
+    public function init_actions(): void {
+        // get list of transients of this plugin.
+        $transients = $this->get_transients();
+
+        // loop through them and run only the action transients.
+        foreach( $transients as $transient ) {
+            if( ! empty( $transient->get_message() ) ) {
+                continue;
+            }
+
+            // run the action.
+            $transient->run();
         }
     }
 
@@ -148,9 +171,11 @@ class Transients {
     /**
      * Return all known transients of any plugin as objects.
      *
+     * @param bool $only_with_text True to load only transients with messages.
+     *
      * @return array<string,array<string,Transient>>
      */
-    public function get_all_transients(): array {
+    public function get_all_transients( bool $only_with_text ): array {
         // get list of our own transients from DB as array.
         $transients_from_db = get_option( 'etfw_transients', array() );
         if ( ! is_array( $transients_from_db ) ) {
@@ -181,6 +206,15 @@ class Transients {
                 continue;
             }
 
+            // bail if transient has no text, if it is requested.
+            if( $only_with_text && empty( $transient->get_message() ) ) {
+                // remove this entry.
+                unset( $transients_from_db[ $this->get_slug() ][ $index ] );
+
+                // do not add this.
+                continue;
+            }
+
             // add object to list.
             $transients_from_db[ $this->get_slug() ][ $transient->get_name() ] = $transient;
         }
@@ -192,11 +226,13 @@ class Transients {
     /**
      * Return all known transients of this plugin as objects.
      *
+     * @param bool $only_with_text True to load only transients with messages.
+     *
      * @return array<string,Transient>
      */
-    public function get_transients(): array {
+    public function get_transients( bool $only_with_text = false ): array {
         // get all actual known transients as array.
-        $transients = $this->get_all_transients();
+        $transients = $this->get_all_transients( $only_with_text );
 
         // bail if no transients for this plugin are set.
         if( empty( $transients[ $this->get_slug() ] ) ) {
