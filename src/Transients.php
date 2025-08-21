@@ -175,7 +175,7 @@ class Transients {
      *
      * @return array<string,array<string,Transient>>
      */
-    public function get_all_transients( bool $only_with_text ): array {
+    public function get_all_transients( bool $only_with_text = false ): array {
         // get list of our own transients from DB as array.
         $transients_from_db = get_option( 'etfw_transients', array() );
         if ( ! is_array( $transients_from_db ) ) {
