@@ -73,6 +73,7 @@
 		Hint: Chrome Bug: https://issues.chromium.org/issues/40074749
 		 */
 		scroll-margin-top: 100vh;
+		> *:first-child { margin-right: 10em }
 	}
 	.notice-dismiss { right: 5em }
 
