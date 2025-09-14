@@ -209,6 +209,9 @@ class Transient {
             return;
         }
 
+        // get the translations.
+        $translations = Transients::get_instance()->get_translations();
+
         // output, if message is given.
         if ( $this->has_message() ) {
             include Templates::get_instance()->get_template( Transients::get_instance()->get_template() );

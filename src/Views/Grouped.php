@@ -61,16 +61,27 @@ class Grouped {
             return;
         }
 
+        // get the transients to show.
+        $transient_list = array();
+        foreach ( $transients as $transient_obj ) {
+            // bail if transient is not our own one.
+            if ( ! $transient_obj instanceof Transient ) {
+                continue;
+            }
+
+            $transient_list[] = $transient_obj;
+        }
+
         // sort the transients: primary by their types (error > success).
-        usort( $transients, array( $this, 'sort_by_type' ) );
+        usort( $transient_list, array( $this, 'sort_by_type' ) );
 
         // first loop to get prev and next values.
         $prev = array();
         $next = array();
-        $last = $transients[array_key_first( $transients )]->get_name();
-        $first = $transients[array_key_first( $transients )]->get_name();
+        $last = $transient_list[array_key_first( $transient_list )]->get_name();
+        $first = $transient_list[array_key_first( $transient_list )]->get_name();
         $counter = 0;
-        foreach ( $transients as $transient_obj ) {
+        foreach ( $transient_list as $transient_obj ) {
             // save the last entry as prev for this object.
             if( $last !== $transient_obj->get_name() ) {
                 $prev[ $transient_obj->get_name() ] = $last;
@@ -100,7 +111,7 @@ class Grouped {
                 <?php
 
                 // check for active transients and show them.
-                foreach ( $transients as $transient_obj ) {
+                foreach ( $transient_list as $transient_obj ) {
                     // bail if transient is not set.
                     if ( ! $transient_obj->is_set() ) {
                         continue;
