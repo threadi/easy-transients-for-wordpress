@@ -74,6 +74,13 @@ class Transients {
     private static ?Transients $instance = null;
 
     /**
+     * List of translations.
+     *
+     * @var array<string,string>
+     */
+    private array $translations = array();
+
+    /**
      * Constructor, not used as this a Singleton object.
      */
     private function __construct() {}
@@ -552,5 +559,31 @@ class Transients {
             return;
         }
         $this->display_method = $display_method;
+    }
+
+    /**
+     * Return the list of translations.
+     *
+     * @return string[]
+     */
+    public function get_translations(): array {
+        // set the main translations.
+        $translations = array(
+            'hide_message' => 'Hide this message for %1$d days.',
+            'dismiss' => 'Dismiss'
+        );
+
+        // return combined list of translations.
+        return array_merge( $translations, $this->translations );
+    }
+
+    /**
+     * Set the list of custom translations.
+     *
+     * @param array<string,string> $translations
+     * @return void
+     */
+    public function set_translations( array $translations ): void {
+        $this->translations = $translations;
     }
 }
