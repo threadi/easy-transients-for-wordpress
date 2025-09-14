@@ -149,6 +149,11 @@ class Transients {
 
         // loop through them and run only the action transients.
         foreach( $transients as $transient ) {
+            // bail if transient is not our own one.
+            if( ! $transient instanceof Transient ) {
+                continue;
+            }
+
             if( ! empty( $transient->get_message() ) ) {
                 continue;
             }
@@ -195,6 +200,11 @@ class Transients {
 
                 // create the object from setting.
                 $transient = new Transient( $transient );
+            }
+
+            // bail if transient is not our own one.
+            if( ! $transient instanceof Transient ) {
+                continue;
             }
 
             // bail if transient is not set.

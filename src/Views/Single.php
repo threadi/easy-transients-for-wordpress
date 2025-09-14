@@ -10,6 +10,7 @@ namespace easyTransientsForWordPress\Views;
 // prevent direct access.
 defined( 'ABSPATH' ) || exit;
 
+use easyTransientsForWordPress\Transient;
 use easyTransientsForWordPress\Transients;
 
 /**
@@ -57,6 +58,11 @@ class Single {
 
 		// check for active transients and show them.
 		foreach ( $transients as $transient_obj ) {
+            // bail if transient is not our own one.
+            if( ! $transient_obj instanceof Transient ) {
+                continue;
+            }
+
 			// bail if transient is not set.
 			if ( ! $transient_obj->is_set() ) {
 				continue;
