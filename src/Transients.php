@@ -236,8 +236,13 @@ class Transients {
             $transients_from_db[ $this->get_slug() ][ $transient->get_name() ] = $transient;
         }
 
-        // return the resulting list as array.
-        return $transients_from_db;
+        /**
+         * Filter the transients from the database.
+         *
+         * @since 1.3.0 Available since 1.3.0.
+         * @param array $transients_from_db The transients from the database.
+         */
+        return apply_filters( 'etfw_' . $this->get_slug() . '_transients', $transients_from_db );
     }
 
     /**
