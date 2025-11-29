@@ -26,30 +26,12 @@ jQuery(document).ready(function($) {
                 if( $("#etfw-transients > div:visible").length === 0 ) {
                     $('#etfw-transients-grouped').remove();
                 }
-                // remove snapper if it is only 1.
+                // if it is only 1 move transient out of grouped.
                 if( $("#etfw-transients > div:visible").length === 1 ) {
-                    $('#etfw-transients-grouped .etfw-snapper').remove();
-                    easy_transients_for_wordpress_set_height();
+                    $("#etfw-transients > div:visible").insertAfter( $('#etfw-transients-grouped') );
+                    $('#etfw-transients-grouped, .etfw-snapper').remove();
                 }
             } );
         }
     );
-    easy_transients_for_wordpress_set_height();
 });
-
-/**
- * Set height for transients depending on its contents for grouped views.
- */
-function easy_transients_for_wordpress_set_height() {
-    let height = 0;
-    jQuery('#etfw-transients-grouped #etfw-transients > div:visible').each( function() {
-        let inner_height = 0;
-        jQuery(this).find('> *:not(.etfw-snapper)').each( function() {
-            inner_height += jQuery(this).outerHeight( true );
-        });
-        if( inner_height > height ) {
-            height = inner_height;
-        }
-    });
-    jQuery('#etfw-transients-grouped').css( 'height', height );
-}
