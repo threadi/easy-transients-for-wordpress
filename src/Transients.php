@@ -256,7 +256,7 @@ class Transients {
      */
     public function get_transients( bool $only_with_text = false, bool $show_dismissed = false ): array {
         // get all actual known transients as array.
-        $transients = $this->get_all_transients( $only_with_text );
+        $transients = $this->get_all_transients( $only_with_text, $show_dismissed );
 
         // bail if no transients for this plugin are set.
         if( empty( $transients[ $this->get_slug() ] ) ) {
