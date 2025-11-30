@@ -184,10 +184,11 @@ class Transients {
      * Return all known transients of any plugin as objects.
      *
      * @param bool $only_with_text True to load only transients with messages.
+     * @param bool $show_dismissed Show also dismissed transients.
      *
      * @return array<string,array<string,Transient>>
      */
-    public function get_all_transients( bool $only_with_text = false ): array {
+    public function get_all_transients( bool $only_with_text = false, bool $show_dismissed = false ): array {
         // get list of our own transients from DB as array.
         $transients_from_db = get_option( 'etfw_transients', array() );
         if ( ! is_array( $transients_from_db ) ) {
@@ -214,8 +215,8 @@ class Transients {
                 continue;
             }
 
-            // bail if transient is not set.
-            if ( ! $transient->is_set() || $transient->is_dismissed() ) {
+            // bail if transient is not set or dismissed.
+            if ( ! $transient->is_set() || ( ! $show_dismissed && $transient->is_dismissed() ) ) {
                 // remove this entry.
                 unset( $transients_from_db[ $this->get_slug() ][ $index ] );
 
@@ -249,10 +250,11 @@ class Transients {
      * Return all known transients of this plugin as objects.
      *
      * @param bool $only_with_text True to load only transients with messages.
+     * @param bool $show_dismissed Show also dismissed transients.
      *
      * @return array<string,Transient>
      */
-    public function get_transients( bool $only_with_text = false ): array {
+    public function get_transients( bool $only_with_text = false, bool $show_dismissed = false ): array {
         // get all actual known transients as array.
         $transients = $this->get_all_transients( $only_with_text );
 
