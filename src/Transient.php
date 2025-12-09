@@ -514,11 +514,12 @@ class Transient {
 
             // check if it is callable and exist.
             if ( is_callable( $action ) && method_exists( $action[0], $action[1] ) ) {
+                // run it.
                 $action();
+
+                // remove the transient as action has been run.
+                $this->delete();
             }
         }
-
-        // remove the transient.
-        $this->delete();
     }
 }
