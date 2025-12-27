@@ -149,9 +149,9 @@ class Grouped {
      * @param Transient $a The first transient to compare.
      * @param Transient $b The second transient to compare.
      *
-     * @return bool
+     * @return int
      */
-    public function sort_by_type( Transient $a, Transient $b ): bool {
+    public function sort_by_type( Transient $a, Transient $b ): int {
         if( $a->is_prioritized() ) {
             return false;
         }
@@ -159,6 +159,6 @@ class Grouped {
             return true;
         }
         $state_mapping = $this->type_map();
-        return $state_mapping[$a->get_type()] > $state_mapping[$b->get_type()];
+        return $state_mapping[$a->get_type()] > $state_mapping[$b->get_type()] ? 1 : -1;
     }
 }
