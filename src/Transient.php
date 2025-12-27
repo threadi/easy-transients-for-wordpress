@@ -311,6 +311,9 @@ class Transient {
      * @return void
      */
     public function add_dismiss( int $dismissible_length ): void {
+        if( ! $this->is_set() ) {
+            return;
+        }
         $this->delete_dismiss();
         add_option( Transients::get_instance()->get_slug() . '-dismissed-' . md5( $this->get_name() ), strtotime( absint( $dismissible_length ) . ' days' ), '', true );
     }
