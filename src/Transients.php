@@ -176,7 +176,7 @@ class Transients {
      * @return Transient
      */
     public function add(): Transient {
-        // create new object and return it directly.
+        // create the new object and return it directly.
         return new Transient();
     }
 
@@ -189,7 +189,7 @@ class Transients {
      * @return array<string,array<string,Transient>>
      */
     public function get_all_transients( bool $only_with_text = false, bool $show_dismissed = false ): array {
-        // get list of our own transients from DB as array.
+        // get list of our own transients from the database as array.
         $transients_from_db = get_option( 'etfw_transients', array() );
         if ( ! is_array( $transients_from_db ) ) {
             $transients_from_db = array();
@@ -224,7 +224,7 @@ class Transients {
                 continue;
             }
 
-            // bail if transient has no text, if it is requested.
+            // bail if transient has no text.
             if( $only_with_text && empty( $transient->get_message() ) ) {
                 // remove this entry.
                 unset( $transients_from_db[ $this->get_slug() ][ $index ] );
@@ -233,7 +233,7 @@ class Transients {
                 continue;
             }
 
-            // add object to list.
+            // add the object to list.
             $transients_from_db[ $this->get_slug() ][ $transient->get_name() ] = $transient;
         }
 
@@ -303,7 +303,7 @@ class Transients {
         // add the new one to the list.
         $transients_from_db[ $this->get_slug() ][ $transient_obj->get_name() ] = $transient_obj->get_name();
 
-        // update the transients-list in db.
+        // update the transients-list in the database.
         update_option( 'etfw_transients', $transients_from_db );
     }
 
@@ -434,7 +434,7 @@ class Transients {
     }
 
     /**
-     * Add our scripts for the setup.
+     * Add our scripts for the transients.
      *
      * @return void
      */
@@ -553,8 +553,8 @@ class Transients {
      * Set the display method.
      *
      * We support:
-     * - single => every transient in single admin_notice via configured template, unsorted.
-     * - grouped => all transient in one admin_notice as slider, sorted by errors first, success last.
+     * - single => every transient in single "admin_notice" via the configured template, unsorted.
+     * - grouped => all transient in one "admin_notice" as slider, sorted by errors first, success last.
      *
      * @param string $display_method The display method to use.
      *

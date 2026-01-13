@@ -46,7 +46,7 @@ class Init {
 	}
 
 	/**
-	 * Initialize the setup wrapper.
+	 * Initialize the transient wrapper.
 	 *
 	 * @return void
 	 */
