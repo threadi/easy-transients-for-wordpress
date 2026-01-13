@@ -74,7 +74,7 @@ class Transient {
     private array $hide_on = array();
 
     /**
-     * Prioritized marker.
+     * The prioritized marker.
      *
      * @var bool
      */
@@ -98,7 +98,7 @@ class Transient {
             return;
         }
 
-        // get attributes from entry and set them in object.
+        // get attributes from entry and set them in the object.
         $this->set_message( $entry['message'] );
         $this->set_type( $entry['type'] );
         $this->set_dismissible_days( $entry['dismissible_days'] );
@@ -223,7 +223,7 @@ class Transient {
             $action = $this->get_action();
 
             // check if it is callable and exist.
-            if ( method_exists( $action[0], $action[1] ) && is_callable( $action ) ) {
+            if ( is_callable( $action ) && method_exists( $action[0], $action[1] ) ) {
                 $action();
             }
         }
@@ -255,7 +255,7 @@ class Transient {
     }
 
     /**
-     * Delete this transient from WP and our own list if it exists there.
+     * Delete this transient from WP, and our own list if it exists there.
      *
      * This does not remove the dismiss-marker as it should be independent of the settings itself.
      *
@@ -279,7 +279,7 @@ class Transient {
      * @return bool
      */
     public function is_dismissed(): bool {
-        // get value from cache, if set.
+        // get value from the cache, if set.
         $db_record = $this->get_admin_transient_dismiss_cache();
 
         // return bool depending on value.
@@ -423,7 +423,7 @@ class Transient {
             return admin_url( basename( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) ) );
         }
 
-        // set return value for page url.
+        // set return value for the page url.
         $page_url = '';
 
         // get actual object.
@@ -445,7 +445,7 @@ class Transient {
     }
 
     /**
-     * Return next transient name for slider.
+     * Return next transient name for the slider.
      *
      * @return string
      */
@@ -454,7 +454,7 @@ class Transient {
     }
 
     /**
-     * Set next transient name for slider.
+     * Set next transient name for the slider.
      *
      * @param string $next The next transient name.
      *
@@ -465,7 +465,7 @@ class Transient {
     }
 
     /**
-     * Return prev transient name for slider.
+     * Return prev transient name for the slider.
      *
      * @return string
      */
@@ -474,7 +474,7 @@ class Transient {
     }
 
     /**
-     * Set prev transient name for slider.
+     * Set prev transient name for the slider.
      *
      * @param string $prev The prev transient name.
      *

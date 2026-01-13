@@ -5,6 +5,10 @@
  * @version 1.0.0
  * @package easy-transients-for-wordpress
  */
+
+// prevent direct access.
+defined( 'ABSPATH' ) || exit;
+
 ?>
 <div class="etfw-transient updated etfw-<?php echo esc_attr( $this->get_type() ); ?>" data-dismissible="<?php echo esc_attr( $this->get_name() ); ?>-<?php echo absint( $this->get_dismissible_days() ); ?>">
 	<?php

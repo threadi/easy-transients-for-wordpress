@@ -54,7 +54,7 @@ class Templates {
      * @return string
      */
     public function get_template( string $template ): string {
-        // check if requested template exist in theme.
+        // check if requested template exist in the theme.
         $theme_template = locate_template( trailingslashit( basename( Transients::get_instance()->get_path() ) ) . $template );
         if ( $theme_template ) {
             return $theme_template;

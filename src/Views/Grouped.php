@@ -117,7 +117,7 @@ class Grouped {
                         continue;
                     }
 
-                    // set prev and next (necessary for slider).
+                    // set prev and next (necessary for the slider).
                     $transient_obj->set_prev( $prev[ $transient_obj->get_name() ] );
                     $transient_obj->set_next( $next[ $transient_obj->get_name() ] );
 
