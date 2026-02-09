@@ -139,7 +139,9 @@ class Grouped {
     private function type_map(): array {
         return array(
             'error' => 1,
-            'success' => 2
+            'success' => 2,
+            'hint' => 3,
+            'info' => 4
         );
     }
 
