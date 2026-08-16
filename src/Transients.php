@@ -243,6 +243,7 @@ class Transients {
          * @since 1.3.0 Available since 1.3.0.
          * @param array $transients_from_db The transients from the database.
          */
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- etfw_ is this library's own intentional hook prefix.
         return apply_filters( 'etfw_' . $this->get_slug() . '_transients', $transients_from_db );
     }
 
