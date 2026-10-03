@@ -353,9 +353,19 @@ class Transients {
         // check nonce.
         check_ajax_referer( 'etfw-dismiss-nonce', 'nonce' );
 
+        // bail if the user is not allowed to see (and with it to dismiss) the transients.
+        if ( ! current_user_can( $this->get_capability() ) ) {
+            wp_send_json_error();
+        }
+
         // get values.
         $option_name        = filter_input( INPUT_POST, 'option_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
         $dismissible_length = filter_input( INPUT_POST, 'dismissible_length', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+
+        // bail if no name is given.
+        if ( ! is_string( $option_name ) || '' === $option_name ) {
+            wp_send_json_error();
+        }
 
         if ( 'forever' !== $dismissible_length ) {
             // if $dismissible_length is not an integer default to 14.
