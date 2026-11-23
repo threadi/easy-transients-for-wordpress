@@ -4,7 +4,7 @@ Provides a simple wrapper to handle transients in the WordPress-backend as admin
 
 ## Requirements
 
-* PHP 8.0 or newer.
+* PHP 8.2 or newer.
 * _composer_ to install this package.
 * WordPress-plugin, theme or _Code Snippet_-plugin to embed them in your project.
 
