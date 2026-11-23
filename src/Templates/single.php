@@ -6,6 +6,8 @@
  * @package easy-transients-for-wordpress
  */
 
+declare(strict_types=1);
+
 // prevent direct access.
 defined( 'ABSPATH' ) || exit;
 

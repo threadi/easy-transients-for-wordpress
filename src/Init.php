@@ -5,6 +5,8 @@
  * @package easy-transients-for-wordpress
  */
 
+declare(strict_types=1);
+
 namespace easyTransientsForWordPress;
 
 // prevent direct access.
@@ -38,11 +40,11 @@ class Init {
 	 * Return the instance of this Singleton object.
 	 */
 	public static function get_instance(): Init {
-		if ( ! static::$instance instanceof static ) {
-			static::$instance = new static();
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
 		}
 
-		return static::$instance;
+		return self::$instance;
 	}
 
 	/**
@@ -51,6 +53,5 @@ class Init {
 	 * @return void
 	 */
 	public function init(): void {
-
 	}
 }
