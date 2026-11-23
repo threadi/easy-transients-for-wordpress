@@ -5,6 +5,8 @@
  * @package easy-transients-for-wordpress
  */
 
+declare(strict_types=1);
+
 namespace easyTransientsForWordPress;
 
 // prevent direct access.
@@ -44,29 +46,60 @@ class Templates {
 		return self::$instance;
 	}
 
-    /**
-     * Return path to a requested template if it exists.
-     *
-     * Also load the requested file if it is located in the /wp-content/themes/xy/plugin-slug/vendor/threadi/easy-transients-for-wordpress/templates/ directory.
-     * Or from actual plugin in /wp-content/plugins/plugin-slug/vendor/threadi/easy-transients-for-wordpress/templates/
-     *
-     * @param string $template The template to use.
-     * @return string
-     */
-    public function get_template( string $template ): string {
-        // check if requested template exist in the theme.
-        $theme_template = locate_template( trailingslashit( basename( Transients::get_instance()->get_path() ) ) . $template );
-        if ( $theme_template ) {
-            return $theme_template;
-        }
+	/**
+	 * Return path to a requested template if it exists.
+	 *
+	 * Search order:
+	 * 1. In the active (child-)theme: /wp-content/themes/xy/{slug}/vendor/threadi/easy-transients-for-wordpress/templates/
+	 * 2. In the project which uses this library: {vendor-path}/../templates/vendor/threadi/easy-transients-for-wordpress/templates/
+	 * 3. The templates of this library.
+	 *
+	 * The result could be changed by the filter "etfw_{slug}_template".
+	 *
+	 * @param string $template The template to use.
+	 * @return string Absolute path to the template or empty string if it does not exist.
+	 */
+	public function get_template( string $template ): string {
+		// bail if template name is not valid.
+		if ( '' === $template || ! str_ends_with( $template, '.php' ) || str_contains( $template, '..' ) ) {
+			return '';
+		}
 
-        // check if actual plugin does contain the requested template.
-        $plugin_template = Transients::get_instance()->get_vendor_path() . '../templates/vendor/threadi/easy-transients-for-wordpress/templates/' . $template;
-        if( file_exists( $plugin_template ) ) {
-            return $plugin_template;
-        }
+		// get the transients object.
+		$transients_obj = Transients::get_instance();
 
-        // return path to our own template.
-        return Transients::get_instance()->get_path() . 'Templates/' . $template;
-    }
+		// check if requested template exist in the theme.
+		$path = locate_template( trailingslashit( $transients_obj->get_slug() ) . 'vendor/threadi/easy-transients-for-wordpress/templates/' . $template );
+
+		// check if actual plugin does contain the requested template.
+		if ( empty( $path ) ) {
+			$plugin_template = trailingslashit( $transients_obj->get_vendor_path() ) . '../templates/vendor/threadi/easy-transients-for-wordpress/templates/' . $template;
+			if ( file_exists( $plugin_template ) ) {
+				$path = $plugin_template;
+			}
+		}
+
+		// use our own template.
+		if ( empty( $path ) ) {
+			$path = $transients_obj->get_base_path() . 'Templates/' . $template;
+		}
+
+		/**
+		 * Filter the path of the template to use.
+		 *
+		 * @since 1.5.0 Available since 1.5.0.
+		 * @param string $path The absolute path to the template.
+		 * @param string $template The requested template.
+		 */
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- etfw_ is this library's own intentional hook prefix.
+		$path = apply_filters( 'etfw_' . $transients_obj->get_slug() . '_template', $path, $template );
+
+		// bail if template does not exist.
+		if ( ! is_string( $path ) || ! file_exists( $path ) ) {
+			return '';
+		}
+
+		// return the path.
+		return $path;
+	}
 }

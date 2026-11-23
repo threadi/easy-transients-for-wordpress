@@ -5,6 +5,8 @@
  * @package easy-transients-for-wordpress
  */
 
+declare(strict_types=1);
+
 namespace easyTransientsForWordPress\Views;
 
 // prevent direct access.
@@ -58,10 +60,10 @@ class Single {
 
 		// check for active transients and show them.
 		foreach ( $transients as $transient_obj ) {
-            // bail if transient is not our own one.
-            if( ! $transient_obj instanceof Transient ) {
-                continue;
-            }
+			// bail if transient is not our own one.
+			if ( ! $transient_obj instanceof Transient ) {
+				continue;
+			}
 
 			// bail if transient is not set.
 			if ( ! $transient_obj->is_set() ) {

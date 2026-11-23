@@ -1,0 +1,108 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'build-[0-9]+.[0-9]+.[0-9]+'
+      - 'build-[0-9]+.[0-9]+.[0-9]+-*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version, e.g., 1.1.0 or 1.1.0-beta1'
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+
+      - name: Get version
+        id: version
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          if [ -n "${INPUT_VERSION}" ]; then
+            VERSION="${INPUT_VERSION}"
+          else
+            VERSION="${GITHUB_REF_NAME#build-}"
+          fi
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: Check version in composer.json
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+          COMPOSER_VERSION="$(php -r 'echo json_decode( file_get_contents( "composer.json" ), true )["version"] ?? "";')"
+          # Pre-releases like 1.1.0-beta1 may use the version 1.1.0 in composer.json.
+          if [ "${COMPOSER_VERSION}" != "${VERSION}" ] && [ "${COMPOSER_VERSION}" != "${VERSION%%-*}" ]; then
+            echo "::error::Version in composer.json (${COMPOSER_VERSION}) does not match ${VERSION}"
+            exit 1
+          fi
+
+      - run: composer validate --no-check-publish --no-check-lock
+
+      - run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Run PHPCS
+        run: composer phpcs
+
+      - name: Run PHPStan
+        run: composer phpstan
+
+      - name: Extract release notes from changelog
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+          # Prints the body of the section "## [<version>] ..." up to the next "## " heading.
+          extract() {
+            awk -v head="## [$1]" '
+              { sub(/\r$/, "") }
+              index($0, head) == 1 { found = 1; next }
+              found && /^## / { exit }
+              found { print }
+            ' changelog.md | sed -e '/./,$!d' | sed -e ':a' -e '/^\n*$/{$d;N;ba' -e '}'
+          }
+          NOTES="$(extract "${VERSION}")"
+          # Pre-releases like 1.1.0-beta1 fall back to the entry for 1.1.0.
+          if [ -z "${NOTES}" ] && [ "${VERSION}" != "${VERSION%%-*}" ]; then
+            NOTES="$(extract "${VERSION%%-*}")"
+          fi
+          if [ -z "${NOTES}" ]; then
+            echo "::error::No entry for version ${VERSION} found in changelog.md"
+            exit 1
+          fi
+          printf '%s\n' "${NOTES}" > "${RUNNER_TEMP}/release-notes.md"
+          cat "${RUNNER_TEMP}/release-notes.md"
+
+      - name: Tag release
+        id: tag
+        env:
+          TAG: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "${TAG}" -m "Release ${TAG}"
+          git push origin "refs/tags/${TAG}"
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          TAG="${{ steps.tag.outputs.tag }}"
+          PRE=""
+          case "$TAG" in *-*) PRE="--prerelease";; esac
+          gh release create "$TAG" --title "$TAG" --notes-file "${RUNNER_TEMP}/release-notes.md" $PRE

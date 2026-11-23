@@ -1,0 +1,13 @@
+parameters:
+  level: 8
+  reportUnmatchedIgnoredErrors: false
+  paths:
+    - src
+  excludePaths:
+    # templates are included inside Transient::display() and use its $this and local variables.
+    - src/Templates/*
+  scanFiles:
+     - %rootDir%/../../php-stubs/wordpress-stubs/wordpress-stubs.php
+  # Values from WordPress filters, options and transients are not type-safe at runtime,
+  # so the library validates them although their PHPDoc types say otherwise.
+  treatPhpDocTypesAsCertain: false

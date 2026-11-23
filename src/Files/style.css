@@ -1,3 +1,10 @@
+/**
+ * Styles for easy-transients-for-wordpress.
+ *
+ * Hint: written without CSS nesting to support also older browsers.
+ * The ID-selectors support the markup of versions < 1.5.0.
+ */
+
 .etfw-transient {
     position: relative;
     z-index: 1;
@@ -32,67 +39,111 @@
     margin-left: 1em;
 }
 
+.etfw-transient .etfw-dismiss-error {
+    color: #d63638;
+    font-weight: 600;
+}
+
+/* grouped container */
+.notice.etfw-transients-grouped,
 #etfw-transients-grouped {
     background: none;
     border: 0;
     box-shadow: none;
     padding: 0;
     position: relative;
-
-    #etfw-transients {
-        display: flex;
-        overflow-x: scroll;
-        scroll-behavior: smooth;
-        box-sizing: border-box;
-        scrollbar-color: transparent transparent;
-    }
-
-    #etfw-transients::-webkit-scrollbar {
-        width: 0;
-    }
-
-    #etfw-transients::-webkit-scrollbar-track {
-        background: transparent;
-    }
-
-    #etfw-transients::-webkit-scrollbar-thumb {
-        background: transparent;
-        border: none;
-    }
-
-    #etfw-transients > div {
-        position: relative;
-        flex: 0 0 calc(100% - 5em - 5px);
-        background: #fff;
-        border: 1px solid #c3c4c7;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-        border-left-width: 4px;
-        padding: 1px 4em 1px 1em;
-        /**
-        Hint: Chrome Bug: https://issues.chromium.org/issues/40074749
-         */
-        scroll-margin-top: 100vh;
-        > *:first-child { margin-right: 10em }
-    }
-    .notice-dismiss { right: 5em }
-
-    .etfw-snapper {
-        position: absolute;
-        right: 1em;
-        top: 0;
-        z-index: 1;
-        a {
-            text-decoration: none;
-            padding: 9px 0;
-            display: inline-block;
-        }
-    }
 }
 
-.etfw-transient.etfw-error, #etfw-transients-grouped #etfw-transients > div.etfw-error { border-left-color: #d63638 }
-.etfw-transient.etfw-notice-info, #etfw-transients-grouped #etfw-transients > div.etfw-notice-info { border-left-color: #72aee6 }
-.etfw-transient.etfw-info, #etfw-transients-grouped #etfw-transients > div.etfw-info { border-left-color: #72aee6 }
-.etfw-transient.etfw-hint, #etfw-transients-grouped #etfw-transients > div.etfw-hint { border-left-color: #72aee6 }
-.etfw-transient.etfw-updated, #etfw-transients-grouped #etfw-transients > div.etfw-updated { border-left-color: #00a32a }
-.etfw-transient.etfw-success, #etfw-transients-grouped #etfw-transients > div.etfw-success { border-left-color: #00a32a }
-.etfw-transient.etfw-warning, #etfw-transients-grouped #etfw-transients > div.etfw-warning { border-left-color: #dba617 }
+.etfw-transients-grouped .etfw-transients,
+#etfw-transients-grouped #etfw-transients {
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+    scrollbar-color: transparent transparent;
+}
+
+.etfw-transients-grouped .etfw-transients::-webkit-scrollbar,
+#etfw-transients-grouped #etfw-transients::-webkit-scrollbar {
+    width: 0;
+}
+
+.etfw-transients-grouped .etfw-transients::-webkit-scrollbar-track,
+#etfw-transients-grouped #etfw-transients::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.etfw-transients-grouped .etfw-transients::-webkit-scrollbar-thumb,
+#etfw-transients-grouped #etfw-transients::-webkit-scrollbar-thumb {
+    background: transparent;
+    border: none;
+}
+
+.etfw-transients-grouped .etfw-transients > div,
+#etfw-transients-grouped #etfw-transients > div {
+    position: relative;
+    flex: 0 0 calc(100% - 5em - 5px);
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+    border-left-width: 4px;
+    padding: 1px 4em 1px 1em;
+    /**
+    Hint: Chrome Bug: https://issues.chromium.org/issues/40074749
+     */
+    scroll-margin-top: 100vh;
+}
+
+.etfw-transients-grouped .etfw-transients > div > *:first-child,
+#etfw-transients-grouped #etfw-transients > div > *:first-child {
+    margin-right: 10em;
+}
+
+.etfw-transients-grouped .notice-dismiss,
+#etfw-transients-grouped .notice-dismiss {
+    right: 5em;
+}
+
+.etfw-transients-grouped .etfw-snapper,
+#etfw-transients-grouped .etfw-snapper {
+    position: absolute;
+    right: 1em;
+    top: 0;
+    z-index: 1;
+}
+
+.etfw-transients-grouped .etfw-snapper a,
+#etfw-transients-grouped .etfw-snapper a {
+    text-decoration: none;
+    padding: 9px 0;
+    display: inline-block;
+}
+
+/* colors per type */
+.etfw-transient.etfw-error,
+.etfw-transients-grouped .etfw-transients > div.etfw-error,
+#etfw-transients-grouped #etfw-transients > div.etfw-error { border-left-color: #d63638 }
+
+.etfw-transient.etfw-notice-info,
+.etfw-transients-grouped .etfw-transients > div.etfw-notice-info,
+#etfw-transients-grouped #etfw-transients > div.etfw-notice-info { border-left-color: #72aee6 }
+
+.etfw-transient.etfw-info,
+.etfw-transients-grouped .etfw-transients > div.etfw-info,
+#etfw-transients-grouped #etfw-transients > div.etfw-info { border-left-color: #72aee6 }
+
+.etfw-transient.etfw-hint,
+.etfw-transients-grouped .etfw-transients > div.etfw-hint,
+#etfw-transients-grouped #etfw-transients > div.etfw-hint { border-left-color: #72aee6 }
+
+.etfw-transient.etfw-updated,
+.etfw-transients-grouped .etfw-transients > div.etfw-updated,
+#etfw-transients-grouped #etfw-transients > div.etfw-updated { border-left-color: #00a32a }
+
+.etfw-transient.etfw-success,
+.etfw-transients-grouped .etfw-transients > div.etfw-success,
+#etfw-transients-grouped #etfw-transients > div.etfw-success { border-left-color: #00a32a }
+
+.etfw-transient.etfw-warning,
+.etfw-transients-grouped .etfw-transients > div.etfw-warning,
+#etfw-transients-grouped #etfw-transients > div.etfw-warning { border-left-color: #dba617 }
